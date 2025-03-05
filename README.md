@@ -15,8 +15,13 @@ You can view the API documentation in two ways:
 <script>
 window.onload = function() {
   SwaggerUIBundle({
-    url: "path/to/your/swagger.json",
+    url: "./swagger.json",
     dom_id: '#swagger-ui',
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIBundle.SwaggerUIStandalonePreset
+    ],
+    layout: "BaseLayout"
   });
 }
 </script> 
