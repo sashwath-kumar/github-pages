@@ -9,6 +9,8 @@ import play.api.mvc._
 import play.api.Environment
 import play.api.Logger
 
+import java.nio.file.Paths
+
 object CustomContentTypes {
   val swaggerYaml = "application/x-yaml"
 }
@@ -36,5 +38,14 @@ class SwaggerController @Inject() (
   def swaggerUI: Action[AnyContent] = Action {
     val file = env.getFile("public/swagger-ui/Swagger-UI.html")
     Ok.sendFile(file)
+  }
+
+  def getSwaggerYaml: Action[AnyContent] = Action {
+    val file = Paths.get("docs/swagger.yaml").toFile
+    if (file.exists()) {
+      Ok.sendFile(file).as("text/yaml")
+    } else {
+      NotFound("Swagger YAML not found")
+    }
   }
 }
